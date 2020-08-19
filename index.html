@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minion</title>
+</head>
+
+<body>
+    <script src="./pixi.min.js"></script>
+    <script>
+        let app = new PIXI.Application({
+            width: 768,
+            height: 1024,
+        });
+        document.body.appendChild(app.view);
+
+        let img = new PIXI.Sprite.from("1.jpg");
+        img.width = 768;
+        img.height = 1024;
+        app.stage.addChild(img);
+
+        depthMap = new PIXI.Sprite.from("1m.jpg");
+        app.stage.addChild(depthMap);
+
+        displacementFilter = new PIXI.filters.DisplacementFilter(depthMap);
+        app.stage.filters = [displacementFilter];
+
+        window.onmousemove = function (e) {
+            displacementFilter.scale.x = (window.innerWidth / 2 - e.clientX) / 20;
+            displacementFilter.scale.y = (window.innerHeight / 2 - e.clientY) / 20;
+
+        }
+    </script>
+</body>
+
+</html>
